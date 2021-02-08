@@ -1,0 +1,9 @@
+[submodule "etc/pybind11"]
+	path = etc/pybind11
+	url = git@github.com:pybind/pybind11.git
+[submodule "etc/pointconv_pytorch"]
+	path = etc/pointconv_pytorch
+	url = git@github.com:DylanWusee/pointconv_pytorch.git
+[submodule "etc/pyreality"]
+	path = etc/pyreality
+	url = git@github.com:cake-lab/pyreality.git
