@@ -24,7 +24,7 @@ Then, install all the dependencies with `pipenv`:
 ```
 
 
-Please notice that we do not provide generated dataset, but users can use the generation scripts in `datasets/pointar` to generate their own dataset. To do so, one must first request access to Matterport3D and Neural Illumination datasets, as links shown in the end of the document. Additionally, we provide an intermediate abstraction of the Matterport3D dataset in the `matterport_configs.zip` file, please extract the files and modify related path string in the code before conducting generation.
+Please notice that we do not provide generated dataset, but users can use the generation scripts in `datasets/pointar` to generate their own dataset. To do so, one must first request access to Matterport3D and Neural Illumination datasets. We attached related links shown at the end of the document.
 
 To train the model:
 
