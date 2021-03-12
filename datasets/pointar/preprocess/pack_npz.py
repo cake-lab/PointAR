@@ -17,12 +17,12 @@ import pycuda.driver as drv
 from pycuda.compiler import SourceModule
 from pycuda.tools import make_default_context
 
-ANCHOR_SIZE = 1792
+ANCHOR_SIZE = 1280
 # ANCHOR_SIZE = 128000
 anchors_pos = pr.fibonacci_sphere(ANCHOR_SIZE)
 
-os.environ['CUDA_DEVICE_ORDER'] = 'PCI_BUS_ID'
-os.environ['CUDA_VISIBLE_DEVICES'] = '1'
+# os.environ['CUDA_DEVICE_ORDER'] = 'PCI_BUS_ID'
+# os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 # os.environ['CUDA_VISIBLE_DEVICES'] = str(min(os.getpid() % 4, 2))
 importlib.import_module('pycuda.autoinit')
 
@@ -61,46 +61,10 @@ def sphere_points(point_cloud):
     anchor_dst = anchor_distance[:, 1, np.newaxis].astype(np.float32)
     anchor_dst[anchor_dst == np.finfo(np.float32).max] = 0
 
-
     res = np.concatenate(
         (anchors_pos, anchor_clr, anchor_ray, anchor_dst), axis=-1)
 
     return res
-
-    # This code for sanity check
-    ######################################################
-
-    # Print sorted order of selected indexes
-    # tf = pd.DataFrame.from_dict({
-    #     'a_idx': a_index,
-    #     'p_idx': p_index
-    # })
-    # tf =tf.sort_values('a_idx')
-
-    # -----------------------------------------------------
-
-    # Numpy staright forward implemention
-
-    # idx = np.arange(len(points), dtype=np.int)
-
-    # # Reduction, color anchor points
-    # a_color = np.zeros((ANCHOR_SIZE, 3), dtype=np.float32)
-
-    # p_index_distance = np.array(p_index_distance, dtype=np.float32)
-    # p_index = p_index_distance[:, 0].astype(np.int32)
-    # p_distance = p_index_distance[:, 1].astype(np.float32)
-    # p_distance[p_distance < (0.1 * 0.1)] = np.finfo(np.float32).max
-
-    # c = 0
-    # for i in range(ANCHOR_SIZE):
-    #     mask = p_index == i
-    #     seq = p_distance[mask]
-
-    #     if len(seq) > 0:
-    #         c += 1
-    #         min_distance_idx = np.argmin(seq)
-    #         min_idx = idx[mask][min_distance_idx]
-    #         a_color[i, :] = colors[min_idx]
 
 
 def uniform_points(point_cloud) -> np.array:
