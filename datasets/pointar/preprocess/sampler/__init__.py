@@ -62,7 +62,7 @@ class UniSphereCUDASampler:
         importlib.import_module('pycuda.autoinit')
 
         module_src = open(
-            './datasets/xihe/preprocess/cuda/sphere.cu', 'r').read()
+            './datasets/pointar/preprocess/cuda/sphere.cu', 'r').read()
         module_src = module_src.replace(
             '#define ANCHOR_SIZE 1280',
             f'#define ANCHOR_SIZE {n_anchors}')

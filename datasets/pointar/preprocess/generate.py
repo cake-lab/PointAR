@@ -2,6 +2,7 @@ import io
 import os
 import json
 import math
+import configs
 import imageio
 import importlib
 import numpy as np
@@ -27,10 +28,10 @@ ni_zips = NeuralIlluminationZips()
 mt_list = Matterport3DList()
 DS_RATE = 4
 DEBUG = False
-OUTPUT_PATH = '/mnt/SSD4T/yiqinzhao/Xihe/xihe-dataset'
+OUTPUT_PATH = configs.pointar_dataset_path
 
 module = SourceModule(
-    open('./datasets/xihe/preprocess/cuda/preprocess.cu', 'r').read()
+    open('./datasets/pointar/preprocess/cuda/preprocess.cu', 'r').read()
 )
 
 make_point_cloud = module.get_function("makePointCloud")

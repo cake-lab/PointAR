@@ -1,8 +1,9 @@
 import json
 import glob
+import configs
 
-config_path = '/mnt/SSD4T/yiqinzhao/Xihe/matterport_configs'
-matterport3d_root = '/mnt/IRONWOLF1/yiqinzhao/RawDatasets/Matterport3D/v1/scans'
+config_path = './datasets/matterport3d/configs'
+matterport3d_root = configs.matterport3d_root
 
 
 class Matterport3DList:

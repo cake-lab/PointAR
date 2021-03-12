@@ -26,7 +26,7 @@ os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 # os.environ['CUDA_VISIBLE_DEVICES'] = str(min(os.getpid() % 4, 2))
 importlib.import_module('pycuda.autoinit')
 
-module_src = open('./datasets/xihe/preprocess/cuda/sphere.cu', 'r').read()
+module_src = open('./datasets/pointar/preprocess/cuda/sphere.cu', 'r').read()
 module_src = module_src.replace(
     '#define ANCHOR_SIZE 1280',
     f'#define ANCHOR_SIZE {ANCHOR_SIZE}')
@@ -138,7 +138,7 @@ def runner(args):
     dataset, i = args
 
     pc = np.load(
-        f'/mnt/SSD4T/yiqinzhao/Xihe/xihe-dataset' +
+        f'./datasets/pointar/pointar-dataset' +
         f'/{dataset}/{i}/point_cloud.npy')
     pc -= np.array([0, 0.1, 0, 0, 0, 0, 0, 0, 0])
 
@@ -150,7 +150,7 @@ def runner(args):
 
 
 def get_package(dataset):
-    g = glob.glob(f'/mnt/SSD4T/yiqinzhao/Xihe/xihe-dataset/{dataset}/*')
+    g = glob.glob(f'./datasets/pointar/pointar-dataset/{dataset}/*')
 
     uniform_points_npz = np.zeros((len(g), ANCHOR_SIZE, 10), dtype=np.float32)
     sphere_points_npz = np.zeros((len(g), ANCHOR_SIZE, 10), dtype=np.float32)
@@ -188,11 +188,11 @@ def pack_npz(dataset, index='all'):
 
     if index != 'all':
         f = h5py.File(
-            f'/mnt/SSD4T/yiqinzhao/Xihe/xihe-dataset' +
-            f'/package/xihe-dataset-debug.hdf5', 'a')
+            f'./datasets/pointar' +
+            f'/package/pointar-dataset-debug.hdf5', 'a')
 
         pc = np.load(
-            f'/mnt/SSD4T/yiqinzhao/Xihe/xihe-dataset/{dataset}' +
+            f'./datasets/pointar/pointar-dataset/{dataset}' +
             f'/{index}/point_cloud.npy')
         pc -= np.array([0, 0.1, 0, 0, 0, 0, 0, 0, 0])
         # t = time.time_ns()
@@ -209,8 +209,8 @@ def pack_npz(dataset, index='all'):
 
     else:
         f = h5py.File(
-            f'/mnt/SSD4T/yiqinzhao/Xihe/xihe-dataset' +
-            f'/package/xihe-dataset-points.hdf5', 'a')
+            f'./datasets/pointar' +
+            f'/package/pointar-dataset-points.hdf5', 'a')
 
         g = f.require_group(f'{dataset}_{ANCHOR_SIZE}')
 

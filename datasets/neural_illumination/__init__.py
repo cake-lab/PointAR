@@ -1,10 +1,11 @@
 import glob
 import zipfile
+import configs
 
 
 class NeuralIlluminationList:
     def __init__(self, dataset_name):
-        root = '/path/to/NeuralIllumination/info'
+        root = configs.neural_illumination_path
 
         self.dataset_name = dataset_name
         self.data = open(f'{root}/{dataset_name}list.txt', 'r').readlines()
