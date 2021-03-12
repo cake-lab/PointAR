@@ -1,10 +1,12 @@
 {
     "cSpell.words": [
         "Conv",
+        "astype",
         "cuda",
         "hparams",
         "illummaps",
         "imageio",
+        "intrinsics",
         "ndarray",
         "pointar",
         "pointconv",
@@ -15,6 +17,7 @@
         "sklearn",
         "submodule",
         "submodules",
-        "tqdm"
+        "tqdm",
+        "xyzw"
     ]
 }
