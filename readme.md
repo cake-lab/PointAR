@@ -29,6 +29,8 @@ Please notice that we do not provide generated dataset, but users can use the ge
 
 We provide data generation scripts, the generated data is around 300 GB, takes 3 hours for generation (GPU device, CPU device).
 
+To start data generation, please first download the Matterport3D and Neural Illumination datasets. And then modify the corresponding path in `config.py` file, then use the `gen_data.py` script to start generation.
+
 ## Model Training
 
 To train the model:

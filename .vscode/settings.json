@@ -1,6 +1,8 @@
 {
     "cSpell.words": [
         "Conv",
+        "DNNs",
+        "ECCV",
         "arange",
         "astype",
         "ckpt",
@@ -14,6 +16,7 @@
         "intrinsics",
         "ndarray",
         "optim",
+        "pipenv",
         "pointar",
         "pointconv",
         "pycuda",
