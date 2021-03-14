@@ -1,3 +1,0 @@
-[submodule "etc/pointconv_pytorch"]
-	path = etc/pointconv_pytorch
-	url = git@github.com:DylanWusee/pointconv_pytorch.git
