@@ -4,6 +4,3 @@
 [submodule "etc/pointconv_pytorch"]
 	path = etc/pointconv_pytorch
 	url = git@github.com:DylanWusee/pointconv_pytorch.git
-[submodule "etc/pyreality"]
-	path = etc/pyreality
-	url = git@github.com:cake-lab/pyreality.git
