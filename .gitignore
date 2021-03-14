@@ -166,3 +166,7 @@ dmypy.json
 etc/torch
 etc/torch_cluster
 lightning_logs
+!datasets/pointar/dist
+datasets/pointar/dist/*
+!datasets/pointar/dist/package
+datasets/pointar/dist/package/*

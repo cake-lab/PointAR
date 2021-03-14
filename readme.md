@@ -23,8 +23,13 @@ Then, install all the dependencies with `pipenv`:
 ./install_deps.sh
 ```
 
+## Preprocess Steps
 
 Please notice that we do not provide generated dataset, but users can use the generation scripts in `datasets/pointar` to generate their own dataset. To do so, one must first request access to Matterport3D and Neural Illumination datasets. We attached related links shown at the end of the document.
+
+We provide data generation scripts, the generated data is around 300 GB, takes 3 hours for generation (GPU device, CPU device).
+
+## Model Training
 
 To train the model:
 

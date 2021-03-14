@@ -1,15 +1,18 @@
+""" PointAR training script
+"""
+
 import os
 import fire
 import torch
 import pytorch_lightning as pl
 from pytorch_lightning.callbacks.early_stopping import EarlyStopping
 
-from model.pointconv import PointARPlus
+from model.pointconv import PointAR
 from trainer.utils import train_valid_test_split
 
 from datasets.pointar.loader import PointARTestDataset
 from datasets.pointar.loader import PointARTrainDataset
-from datasets.pointar.loader import PointARTrainD10Dataset
+# from datasets.pointar.loader import PointARTrainD10Dataset
 
 
 class ModelSavingCallback(pl.Callback):
@@ -20,31 +23,34 @@ class ModelSavingCallback(pl.Callback):
         dump_path = f'./dist/model_dumps'
         os.system(f'mkdir -p {dump_path}')
 
-        # torch.onnx.export(
-        #     pl_module, self.sample_input,
-        #     f'{dump_path}/{trainer.current_epoch}.onnx',
-        #     do_constant_folding=True,
-        #     opset_version=11)
-
         trainer.save_checkpoint(f'{dump_path}/{trainer.current_epoch}.ckpt')
 
 
 def train(debug=False,
-          use_hdr=False,
+          use_hdr=True,
           normalize=False,
-          distribution='sphere',
           n_anchors=1280,
           num_workers=16,
           downsample_rate=1.0,
           batch_size=32):
+    """Train PointAR model
+
+    Parameters
+    ----------
+    debug : bool
+        Set debugging flag
+    use_hdr : bool
+        Use HDR SH coefficients data for training
+    normalize : bool
+        Normalize SH coefficients
+    """
 
     # Specify dataset
     TestDataset = PointARTestDataset
-    TrainDataset = TestDataset if debug else PointARTrainD10Dataset
+    TrainDataset = TestDataset if debug else PointARTrainDataset
 
     # Get loaders ready
-    loader_param = {'distribution': distribution,
-                    'use_hdr': use_hdr, 'n_anchors': n_anchors}
+    loader_param = {'use_hdr': use_hdr}
     loaders, scaler = train_valid_test_split(
         TrainDataset, loader_param,
         TestDataset, loader_param,
@@ -53,7 +59,7 @@ def train(debug=False,
     train_loader, valid_loader, test_loader = loaders
 
     # Get model ready
-    model = PointARPlus(hparams={
+    model = PointAR(hparams={
         'num_shc': 27,
         'n_anchors': n_anchors,
         'downsample_rate': downsample_rate,

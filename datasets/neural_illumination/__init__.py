@@ -1,4 +1,7 @@
-import glob
+"""Neural Illumination abstraction
+data description
+"""
+
 import zipfile
 import configs
 
@@ -36,6 +39,7 @@ class NeuralIlluminationZips:
     def __getitem__(self, scene_id):
         if scene_id not in self.data:
             self.data[scene_id] = zipfile.ZipFile(
-                f'/path/to/NeuralIllumination/illummaps_{scene_id}.zip')
+                f'{configs.neural_illumination_path}' +
+                f'/illummaps_{scene_id}.zip')
 
         return self.data[scene_id]

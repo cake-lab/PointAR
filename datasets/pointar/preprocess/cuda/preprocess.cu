@@ -1,3 +1,7 @@
+/*
+  CUDA kernels for accelerating data generation
+*/
+
 __global__ void makePointCloud (
     float3 *dest, float *depthTexture, float2 *intrinsics
 ) {

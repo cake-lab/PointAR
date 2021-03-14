@@ -10,11 +10,8 @@ import pyreality as pr
 from functools import lru_cache
 
 from tqdm import tqdm
-import multiprocessing
 from multiprocessing import Pool
-from datasets.pointar.preprocess.utils import map_hdr
 
-# import pycuda.autoinit
 import pycuda.driver as drv
 from pycuda.compiler import SourceModule
 
@@ -22,12 +19,13 @@ from datasets.matterport3d import Matterport3DList, matterport3d_root
 from datasets.neural_illumination import NeuralIlluminationList
 from datasets.neural_illumination import NeuralIlluminationZips
 
+# Allow cuda execution
 importlib.import_module('pycuda.autoinit')
 
-ni_zips = NeuralIlluminationZips()
+DS_RATE = 4 # Set DS_RATE to downsample input images before other operations for faster execution
+DEBUG = False # Enabling DEBUG will save intermediate results
 mt_list = Matterport3DList()
-DS_RATE = 4
-DEBUG = False
+ni_zips = NeuralIlluminationZips()
 OUTPUT_PATH = configs.pointar_dataset_path
 
 module = SourceModule(
@@ -35,8 +33,20 @@ module = SourceModule(
 )
 
 make_point_cloud = module.get_function("makePointCloud")
+camera_adjustment = module.get_function("cameraAdjustment")
 make_sh_coefficients = module.get_function("makeSHCoefficients")
-cameraAdjustment = module.get_function("cameraAdjustment")
+
+
+def map_hdr(channel):
+    channel = channel.astype(np.float32)
+
+    mask = channel < 3000
+
+    channel[mask] = channel[mask] * 8e-8
+    channel[~mask] = 0.00024 * \
+        1.0002 ** (channel[~mask] - 3000)
+
+    return channel
 
 
 def get_batched_basis_at(normal_batch):
@@ -232,7 +242,7 @@ def process_input_gpu(source_package, dataset, index, item):
     xyz_camera_space = np.array(xyz_camera_space, dtype=np.float32)
     xyz_world_space = xyz_camera_space.reshape((-1, 3))
 
-    cameraAdjustment(
+    camera_adjustment(
         drv.InOut(xyz_world_space),
         drv.In(mat_ctw),
         drv.In(mat_rotation),
@@ -480,13 +490,10 @@ def process_output_gpu(source_package, dataset, index, item):
 def process(args):
     dataset, idx, item = args
 
-    # fetch_data_file(dataset, idx, item)
-    # return
-
+    fetch_data_file(dataset, idx, item)
     source_package = np.load(f'{OUTPUT_PATH}/{dataset}/{idx}/source.npz')
-    # process_input(source_package, dataset, idx, item)
+
     process_input_gpu(source_package, dataset, idx, item)
-    # process_output(source_package, dataset, idx, item)
     process_output_gpu(source_package, dataset, idx, item)
 
 
@@ -499,16 +506,10 @@ def generate(dataset, index='all', debug=False):
     if index == 'all':
         args = [(dataset, i, v) for i, v in enumerate(ni_list)]
 
-        # Allow cuda execution
-        multiprocessing.set_start_method('spawn')
-
-        with Pool(80) as _p:
+        with Pool(40) as _p:
             list(tqdm(_p.imap(process, args), total=len(args)))
-
-        # for arg in tqdm(args):
-        #     process(arg)
     else:
-        # fetch_data_file(dataset, index, ni_list[index])
+        fetch_data_file(dataset, index, ni_list[index])
 
         source_package = np.load(f'{OUTPUT_PATH}/{dataset}/{index}/source.npz')
         process_input_gpu(source_package, dataset, index, ni_list[index])
