@@ -43,6 +43,9 @@ To train the model:
 
 ```
 python train.py
+
+# For getting help info of the training script
+python train.py --help
 ```
 
 ## Links
