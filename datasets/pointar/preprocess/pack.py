@@ -42,7 +42,7 @@ def runner(args):
         f'/{dataset}/{i}/point_cloud.npz')['point_cloud']
 
     # Assume virtual object is placed at [0, 0.1, 0]
-    pc -= np.array([0, 0.1, 0, 0, 0, 0, 0, 0, 0])
+    pc -= np.array([0, 0.1, 0, 0, 0, 0])
     u = uniform_points(pc)
 
     return u
