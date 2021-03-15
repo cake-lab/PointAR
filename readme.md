@@ -14,12 +14,16 @@ First, clone the repo and update all the submodules.
 ```bash
 git clone git@github.com:cake-lab/PointAR.git
 cd PointAR
-git submodule update --init --recursive
 ```
 
 Then, install all the dependencies with `pipenv`:
 
 ```bash
+pipenv install
+pipenv shell
+
+# The following script will automatically install PyTorch with CUDA 11
+# If you are running a different CUDA version, please modify corresponding lines
 ./install_deps.sh
 ```
 
@@ -30,6 +34,8 @@ Please notice that we do not provide generated dataset, but users can use the ge
 We provide data generation scripts, the generated data is around 300 GB, takes 3 hours for generation (GPU device, CPU device).
 
 To start data generation, please first download the Matterport3D and Neural Illumination datasets. And then modify the corresponding path in `config.py` file, then use the `gen_data.py` script to start generation.
+
+Upon downloaded Matterport3D dataset, please unzip the downloaded zip files and place them in a folder, the file structure should be like `v1/scans/<SCENE_ID>/...`. As for the Neural Illumination dataset, please just keep the downloaded zip files, i.e. `illummaps_<SCENE_ID>.zip`, and please them in a folder.
 
 ## Model Training
 
