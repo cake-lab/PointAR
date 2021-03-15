@@ -1,4 +1,4 @@
-"""Point cloud model architecture definition
+"""PointAR model architecture definition
 """
 
 import torch.nn as nn
@@ -15,10 +15,10 @@ class PointConvModel(pl.LightningModule):
         self.hparams = hparams
         self.save_hyperparameters()
 
-        npoints = int(self.hparams['n_anchors'])
+        n_points = int(self.hparams['n_points'])
 
         self.sa1 = PointConvDensitySetAbstraction(
-            npoint=npoints, nsample=32, in_channel=3 + 3,
+            npoint=n_points, nsample=32, in_channel=3 + 3,
             mlp=[64, 128], bandwidth=0.1, group_all=False
         )
 
@@ -35,7 +35,7 @@ class PointConvModel(pl.LightningModule):
         self.bn4 = nn.BatchNorm1d(64)
         self.drop4 = nn.Dropout(0.2)
 
-        self.fc5 = nn.Linear(64, self.hparams['num_shc'])
+        self.fc5 = nn.Linear(64, self.hparams['n_shc'])
 
     def forward(self, xyz, rgb):
         B, _, _ = xyz.shape

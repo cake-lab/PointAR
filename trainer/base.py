@@ -1,3 +1,6 @@
+"""PointAR trainer, based on PyTorch Lightning
+"""
+
 import pytorch_lightning as pl
 
 

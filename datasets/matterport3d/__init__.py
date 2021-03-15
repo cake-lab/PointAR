@@ -1,5 +1,4 @@
-"""Matterport3D abstraction
-data description
+"""Matterport3D dataset abstraction
 """
 
 import json

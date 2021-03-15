@@ -1,5 +1,4 @@
-"""Neural Illumination abstraction
-data description
+"""Neural Illumination dataset abstraction
 """
 
 import zipfile

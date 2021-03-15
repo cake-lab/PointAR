@@ -1,3 +1,7 @@
+"""Data generation
+PointAR dataset generation code with CUDA GPU acceleration
+"""
+
 import io
 import os
 import json

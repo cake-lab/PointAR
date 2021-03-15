@@ -1,3 +1,8 @@
+"""Packing generated data into bundles
+Input data, i.e. point cloud, will be bundled into hdf5 database
+Label data, i.e. SH coefficients, will be bundled into npz files
+"""
+
 import json
 import glob
 import h5py

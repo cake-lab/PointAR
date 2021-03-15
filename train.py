@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """ PointAR training script
 """
 
@@ -29,9 +30,8 @@ class ModelSavingCallback(pl.Callback):
 def train(debug=False,
           use_hdr=True,
           normalize=False,
-          n_anchors=1280,
+          n_points=1280,
           num_workers=16,
-          downsample_rate=1.0,
           batch_size=32):
     """Train PointAR model
 
@@ -43,6 +43,12 @@ def train(debug=False,
         Use HDR SH coefficients data for training
     normalize : bool
         Normalize SH coefficients
+    n_points : int
+        Number of model input points, default 1280
+    num_workers : int
+        Number of workers for loading data, default 16
+    batch_size : int
+        Training batch size
     """
 
     # Specify dataset
@@ -60,17 +66,16 @@ def train(debug=False,
 
     # Get model ready
     model = PointAR(hparams={
-        'num_shc': 27,
-        'n_anchors': n_anchors,
-        'downsample_rate': downsample_rate,
+        'n_shc': 27,
+        'n_points': n_points,
         'min': torch.from_numpy(scaler.min_) if normalize else torch.zeros((27)),
         'scale': torch.from_numpy(scaler.scale_) if normalize else torch.ones((27))
     })
 
     # Train
     sample_input = (
-        torch.zeros((1, 3, n_anchors)).float().cuda(),
-        torch.zeros((1, 3, n_anchors)).float().cuda())
+        torch.zeros((1, 3, n_points)).float().cuda(),
+        torch.zeros((1, 3, n_points)).float().cuda())
 
     trainer = pl.Trainer(
         gpus=1,
