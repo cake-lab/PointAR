@@ -2,7 +2,7 @@
 Input data, i.e. point cloud, will be bundled into hdf5 database
 Label data, i.e. SH coefficients, will be bundled into npz files
 """
-
+import os
 import json
 import glob
 import h5py
@@ -93,6 +93,7 @@ def pack_sh_coefficients(dataset):
 
 
 def pack(dataset, index='all'):
+    os.system(f'mkdir -p {configs.pointar_dataset_path}/package')
 
     if index != 'all':
         f = h5py.File(
