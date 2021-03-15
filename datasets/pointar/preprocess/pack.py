@@ -39,7 +39,7 @@ def runner(args):
 
     pc = np.load(
         configs.pointar_dataset_path +
-        f'/{dataset}/{i}/point_cloud.npy')
+        f'/{dataset}/{i}/point_cloud.npz')['point_cloud']
 
     # Assume virtual object is placed at [0, 0.1, 0]
     pc -= np.array([0, 0.1, 0, 0, 0, 0, 0, 0, 0])
@@ -102,7 +102,7 @@ def pack(dataset, index='all'):
 
         pc = np.load(
             configs.pointar_dataset_path +
-            f'/{dataset}/{index}/point_cloud.npy')
+            f'/{dataset}/{index}/point_cloud.npz')['point_cloud']
         pc -= np.array([0, 0.1, 0, 0, 0, 0])
 
         g = f.require_group(f'{dataset}_{N_POINTS}')

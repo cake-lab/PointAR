@@ -287,9 +287,13 @@ def process_input_gpu(source_package, dataset, index, item):
 
     pc = np.concatenate((xyz_shifted, img_color, ray_dirs), axis=-1)
     pc = pc.reshape((-1, 9)).astype(np.float32)
+    pc = pc[:, :6]
 
     # This point cloud has ray direction
-    np.save(f'{OUTPUT_PATH}/{dataset}/{index}/point_cloud', pc)
+    np.savez_compressed(
+        f'{OUTPUT_PATH}/{dataset}/{index}/point_cloud',
+        point_cloud=pc
+    )
 
 
 def process_output(source_package, dataset, index, item):
