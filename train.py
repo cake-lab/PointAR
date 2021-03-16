@@ -79,13 +79,12 @@ def train(debug=False,
 
     trainer = pl.Trainer(
         gpus=1,
-        # accelerator='ddp',
         check_val_every_n_epoch=1,
         callbacks=[
             ModelSavingCallback(
                 sample_input=sample_input
             ),
-            EarlyStopping(monitor='valid_shc_rmse')
+            EarlyStopping(monitor='valid_shc_mse')
         ])
 
     # Start training
