@@ -11,3 +11,4 @@ wget --directory-prefix etc/torch_cluster/ https://pytorch-geometric.com/whl/tor
 pip install etc/torch/torch-1.7.1+cu110-cp38-cp38-linux_x86_64.whl
 pip install etc/torch/torchvision-0.8.2+cu110-cp38-cp38-linux_x86_64.whl
 pip install etc/torch_cluster/torch_cluster-1.5.8-cp38-cp38-linux_x86_64.whl
+pip install torch-cluster -f https://pytorch-geometric.com/whl/torch-1.7.0+cu110.html
