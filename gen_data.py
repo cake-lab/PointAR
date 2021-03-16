@@ -14,17 +14,17 @@ def gen_data():
         index='all',  # data item, 'all' for all items, 0 for data item 0
     )
 
-    print("Packing test dataset")
-    pack('test', index="all")
+    # print("Packing test dataset")
+    # pack('test', index="all")
 
-    print("Generating training dataset")
-    generate(
-        "train",  # dataset name ["train", "test"],
-        index='all',  # data item, 'all' for all items, 0 for data item 0
-    )
+    # print("Generating training dataset")
+    # generate(
+    #     "train",  # dataset name ["train", "test"],
+    #     index='all',  # data item, 'all' for all items, 0 for data item 0
+    # )
 
-    print("Packing training dataset")
-    pack("train", index="all")
+    # print("Packing training dataset")
+    # pack("train", index="all")
 
 
 if __name__ == "__main__":
