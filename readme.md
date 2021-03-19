@@ -48,6 +48,28 @@ python train.py
 python train.py --help
 ```
 
+## Citation
+
+If you would like to cite the paper, please cite it as:
+
+```bibtex
+@InProceedings{pointar_eccv2020,
+    author="Zhao, Yiqin
+    and Guo, Tian",
+    editor="Vedaldi, Andrea
+    and Bischof, Horst
+    and Brox, Thomas
+    and Frahm, Jan-Michael",
+    title="PointAR: Efficient Lighting Estimation for Mobile Augmented Reality",
+    booktitle="Computer Vision -- ECCV 2020",
+    year="2020",
+    publisher="Springer International Publishing",
+    address="Cham",
+    pages="678--693",
+    isbn="978-3-030-58592-1"
+}
+```
+
 ## Links
 
 - Matterport3D dataset: https://github.com/niessner/Matterport
