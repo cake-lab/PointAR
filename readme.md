@@ -9,7 +9,7 @@ We propose an efficient lighting estimation pipeline that is suitable to run on 
 
 ## Using the Code
 
-First, clone the repo and update all the submodules.
+First, clone the repo.
 
 ```bash
 git clone git@github.com:cake-lab/PointAR.git
