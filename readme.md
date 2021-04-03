@@ -2,12 +2,29 @@
 
 [Yiqin Zhao](https://yiqinzhao.me), [Tian Guo](https://tianguo.info)
 
+This is the official code release for [PointAR](https://arxiv.org/pdf/2004.00006.pdf) which was published in ECCV 2020. 
 
-This is the official code release of our ECCV 2020 paper [PointAR: Efficient Lighting Estimation for Mobile Augmented Reality](https://arxiv.org/pdf/2004.00006.pdf).
+## Overview 
+We propose an efficient lighting estimation pipeline that is suitable to run on modern mobile devices, with comparable resource complexities to state-of-the-art on-device deep learning models. Our pipeline, referred to as **PointAR**, takes a single RGB-D image captured from the mobile camera and a 2D location in that image, and estimates a 2nd order spherical harmonics coefficients which can be directly utilized by rendering engines for indoor lighting in the context of augmented reality. Our key insight is to formulate the lighting estimation as a learning problem directly from point clouds, which is in part inspired by the Monte Carlo integration leveraged by real-time spherical harmonics lighting. While existing approaches estimate lighting information with complex deep learning pipelines, our method focuses on reducing the computational complexity. Through both quantitative and qualitative experiments, we demonstrate that PointAR achieves lower lighting estimation errors compared to state-of-the-art methods. Further, our method requires an order of magnitude lower resource, comparable to that of mobile-specific DNNs.
 
-We propose an efficient lighting estimation pipeline that is suitable to run on modern mobile devices, with comparable resource complexities to state-of-the-art on-device deep learning models. Our pipeline, referred to as PointAR, takes a single RGB-D image captured from the mobile camera and a 2D location in that image, and estimates a 2nd order spherical harmonics coefficients which can be directly utilized by rendering engines for indoor lighting in the context of augmented reality. Our key insight is to formulate the lighting estimation as a learning problem directly from point clouds, which is in part inspired by the Monte Carlo integration leveraged by real-time spherical harmonics lighting. While existing approaches estimate lighting information with complex deep learning pipelines, our method focuses on reducing the computational complexity. Through both quantitative and qualitative experiments, we demonstrate that PointAR achieves lower lighting estimation errors compared to state-of-the-art methods. Further, our method requires an order of magnitude lower resource, comparable to that of mobile-specific DNNs.
+## Paper 
 
-## Using the Code
+[PointAR: Efficient Lighting Estimation for Mobile Augmented Reality](https://arxiv.org/pdf/2004.00006.pdf).
+
+If you use the PointAR data or code, please cite: 
+
+```bibtex
+@InProceedings{pointar_eccv2020,
+    author="Zhao, Yiqin
+    and Guo, Tian",
+    title="PointAR: Efficient Lighting Estimation for Mobile Augmented Reality",
+    booktitle="European Conference on Computer Vision (ECCV)",
+    year="2020",
+}
+```
+
+
+## How to use the repo
 
 First, clone the repo.
 
@@ -29,13 +46,14 @@ pipenv shell
 
 ## Preprocess Steps
 
-Please notice that we do not provide generated dataset, but users can use the generation scripts in `datasets/pointar` to generate their own dataset. To do so, one must first request access to Matterport3D and Neural Illumination datasets. We attached related links shown at the end of the document.
+One of the key steps in reproducing our work is to generate the transformed point cloud datasets. We provide the scripts which can be found in `datasets/pointar` for users to generate their respective datasets. At the high level, 
+- users should first obtain access to the two open-source datasets (i.e., [Matterport3D]( https://github.com/niessner/Matterport) and [Neural Illumination](https://illumination.cs.princeton.edu) datasets);
+- download these two datasets to a desirable directory. For the Matterport3D dataset, unzip the downloaded zip files and place them in a directory with structure similar to `v1/scans/<SCENE_ID>/...`. For the Neural Illumination dataset, just store the downloaded zip files, i.e. `illummaps_<SCENE_ID>.zip`, directly in a directory.
+- modify the corresponding the path variable in `config.py` file to reflect the local directory name;
+- then use the `gen_data.py` script to start generation.
 
-We provide data generation scripts, the generated data is around 300 GB, takes 3 hours for generation (GPU device, CPU device).
+Note it can take a few hours to generate the entire dataset (~300GB) depending on the GPU devices. 
 
-To start data generation, please first download the Matterport3D and Neural Illumination datasets. And then modify the corresponding path in `config.py` file, then use the `gen_data.py` script to start generation.
-
-Upon downloaded Matterport3D dataset, please unzip the downloaded zip files and place them in a folder, the file structure should be like `v1/scans/<SCENE_ID>/...`. As for the Neural Illumination dataset, please just keep the downloaded zip files, i.e. `illummaps_<SCENE_ID>.zip`, and please them in a folder.
 
 ## Model Training
 
@@ -47,31 +65,10 @@ python train.py
 # For getting help info of the training script
 python train.py --help
 ```
+Our point cloud training component leverages the [PointConv](https://github.com/DylanWusee/pointconv_pytorch). 
 
-## Citation
 
-If you would like to cite the paper, please cite it as:
+## Acknowledgement
+This work is supported in part by National Science Foundation grants #1755659 and #1815619. 
 
-```bibtex
-@InProceedings{pointar_eccv2020,
-    author="Zhao, Yiqin
-    and Guo, Tian",
-    editor="Vedaldi, Andrea
-    and Bischof, Horst
-    and Brox, Thomas
-    and Frahm, Jan-Michael",
-    title="PointAR: Efficient Lighting Estimation for Mobile Augmented Reality",
-    booktitle="Computer Vision -- ECCV 2020",
-    year="2020",
-    publisher="Springer International Publishing",
-    address="Cham",
-    pages="678--693",
-    isbn="978-3-030-58592-1"
-}
-```
 
-## Links
-
-- Matterport3D dataset: https://github.com/niessner/Matterport
-- Neural Illumination: https://illumination.cs.princeton.edu
-- PointConv: https://github.com/DylanWusee/pointconv_pytorch
