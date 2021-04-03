@@ -52,7 +52,7 @@ One of the key steps in reproducing our work is to generate the transformed poin
 - modify the corresponding the path variable in `config.py` file to reflect the local directory name;
 - then use the `gen_data.py` script to start generation.
 
-Note it can take a few hours to generate the entire dataset (~300GB) depending on the GPU devices. 
+Note it can take a few hours to generate the entire dataset (~1.4TB) depending on the GPU devices. 
 
 
 ## Model Training
