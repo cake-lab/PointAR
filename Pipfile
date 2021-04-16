@@ -9,6 +9,9 @@ autopep8 = "*"
 rope = "*"
 
 [packages]
+urllib3 = ">=1.26.4"
+Pillow = ">=8.1.1"
+aiohttp = ">=3.7.4"
 pytorch-lightning = "*"
 imageio = "*"
 fire = "*"
