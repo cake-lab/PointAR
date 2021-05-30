@@ -9,6 +9,7 @@ autopep8 = "*"
 rope = "*"
 
 [packages]
+PyYAML = ">=5.4"
 pytorch-lightning = "*"
 imageio = "*"
 fire = "*"
